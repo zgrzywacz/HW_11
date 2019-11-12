@@ -1,7 +1,7 @@
 # HW_11
 ### Apply and Loops
 
-To complete this homework, you will need to clone and branch this repo. Then using RStudio, open the HW_11.Rmd file.  This file contains the questions and some example answers. You will also need the files in _data/.
+To complete this homework, you will need to clone and branch this repo. Then using RStudio, open the HW_11.Rmd file.  This file contains the questions and some example answers. You will also need the files in _data/_.
 
 You will collaborate with a partner to complete the homework.  
 
