@@ -33,6 +33,14 @@ my_table %>%
   kable() %>%
   kable_styling()
 ```
+```{r}
+library(kableExtra)
+```
+
+
+```{r}
+install.packages("kableExtra")
+```
 
 *Hints:*  
 

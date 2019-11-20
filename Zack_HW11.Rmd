@@ -1,0 +1,77 @@
+---
+title: "Zack_HW11"
+output: html_document
+---
+
+1
+
+```{r}
+data(Titanic)
+Titanic
+```
+
+```{r}
+age <- apply(Titanic, c(3,4), sum)
+age
+```
+
+```{r}
+childSurvival <- age[1,2]/(age[1,1]+age[1,2])
+adultSurvival <- age[2,2]/(age[2,1]+age[2,2])
+childSurvival
+adultSurvival
+```
+
+Rates of survival were higher among children than adults.
+
+```{r}
+mf <- apply(Titanic, c(2,4), sum)
+mf
+```
+
+```{r}
+maleSurvival <- mf[1,2]/(mf[1,1]+mf[1,2])
+femaleSurvival <- mf[2,2]/(mf[2,1]+mf[2,2])
+maleSurvival
+femaleSurvival
+```
+
+Females survived at a higher rate than males.
+
+2
+```{r}
+data.path <- "./data/"
+glob.path <- paste0(data.path, "*", ".csv")  
+dataFiles <- lapply(Sys.glob(glob.path), read.csv, skip=11, head=F)
+climvars <- c("pdate", "ppt", "tmin", "tmean", "tmax")
+dataFiles <- lapply(dataFiles, setNames, climvars)
+head(dataFiles[[1]])
+```
+
+```{r}
+threshold <- function(dataset,temp){
+  dataset$thresh <- (dataset[,3] > temp)
+  return(dataset)
+}
+```
+
+```{r}
+lapply(dataFiles, threshold, -3)
+```
+
+3
+
+```{r}
+library(rnoaa)
+```
+
+```{r}
+datalist <- vector(mode="list",length=1)
+for (year in 1985:2019){
+  startyr <- paste0(year,'-01-01')
+  endyr <- paste0(year,'-12-01')
+  
+datalist <- append(datalist, ncdc(datasetid='GSOM', stationid = 'GHCND:ASN00091245', datatypeid='TAVG', startdate = startyr, enddate = endyr, limit = 100, includemetadata = FALSE))
+}
+```
+
