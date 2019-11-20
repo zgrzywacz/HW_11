@@ -70,8 +70,28 @@ datalist <- vector(mode="list",length=1)
 for (year in 1985:2019){
   startyr <- paste0(year,'-01-01')
   endyr <- paste0(year,'-12-01')
+  tempdata <- ncdc(datasetid='GSOM', stationid = 'GHCND:ASN00091245', datatypeid='TAVG', startdate = startyr, enddate = endyr, limit = 100, includemetadata = FALSE)
+datalist <- append(datalist, tempdata)
+}
+```
+
+```{r}
+justdata <- datalist[grepl("data", names(datalist))]
+```
+
+
+```{r}
+tempsum <- setNames(data.frame(matrix(ncol = 3, nrow = 35)), c("Year", "Tavg", "Mons"))
+rowsToDelete <- c()
+for(x in 1:35){
+  currentdata <- data.frame(justdata[x])
+  if(nrow(currentdata) >= 1){
+    tempsum[x,1] <- (1984 + x)
+    tempsum[x,2] <- (colSums(currentdata[4])/nrow(currentdata))
+    tempsum[x,3] <- nrow(currentdata)
+  }
   
-datalist <- append(datalist, ncdc(datasetid='GSOM', stationid = 'GHCND:ASN00091245', datatypeid='TAVG', startdate = startyr, enddate = endyr, limit = 100, includemetadata = FALSE))
+tempsum <- na.omit(tempsum)
 }
 ```
 

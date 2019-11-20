@@ -33,14 +33,6 @@ my_table %>%
   kable() %>%
   kable_styling()
 ```
-```{r}
-library(kableExtra)
-```
-
-
-```{r}
-install.packages("kableExtra")
-```
 
 *Hints:*  
 
@@ -68,6 +60,3 @@ my_table2 %>%
   kable(digits=3) %>%
   kable_styling()
 ```
-
-
-
