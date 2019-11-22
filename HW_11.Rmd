@@ -60,6 +60,3 @@ my_table2 %>%
   kable(digits=3) %>%
   kable_styling()
 ```
-
-
-
