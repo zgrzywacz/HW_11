@@ -75,6 +75,9 @@ datalist <- append(datalist, tempdata)
 }
 ```
 
+
+4
+
 ```{r}
 justdata <- datalist[grepl("data", names(datalist))]
 ```
