@@ -97,3 +97,38 @@ for(x in 1:35){
 tempsum <- na.omit(tempsum)
 }
 ```
+
+
+Your solution is great, but it's pretty dependent on the dates selected.  If dates change, then you would need to update your code in multiple places...my solution:
+```{r}
+Grim_T <- list()
+
+for (year in seq(1985, 2019)){
+  stDate <- paste0(year, "-01-01")
+  endDate <- paste0(year, "-12-31")
+ Tdat <- ncdc(datasetid='GSOM', stationid = 'GHCND:ASN00091245', datatypeid='TAVG', startdate = stDate, enddate = endDate, limit = 100, add_units=TRUE)
+ name <- paste0("GrimT_", year)
+  Grim_T[[name]] <- Tdat[[2]]
+}
+
+```
+
+4) Calculate the average annual temperature and the number of months used to generate that mean (years without data can be excluded).  Report in a table.
+
+```{r, echo=FALSE}
+test2 <- bind_rows(Grim_T) #requires dplyr
+#or
+test2 <- do.call(rbind, Grim_T)
+```
+
+Calculate the mean T for each year
+```{r}
+test2$year <- year(test2$date)
+year_mn <- aggregate(value ~ year, data=test2, FUN = "mean")
+count <- aggregate(value ~ year, data=test2, FUN = length)
+CapeG_Tavg <- data.frame("Year" = year_mn$year, "Tavg" = year_mn$value, "Mons" = count$value)
+CapeG_Tavg_tbl <- head(CapeG_Tavg, 3)
+CapeG_Tavg_tbl %>%
+  kable() %>%
+  kable_styling()
+```
